@@ -1,23 +1,21 @@
 import { validate } from 'class-validator';
+import * as _ from 'lodash';
+
 import { REGISTRATION_REQUEST } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
 import { Context } from '../../models/common';
+import * as util from '../../util';
 
 export const registrationRequestValidator = async (ctx: Context, next: Function) => {
 
-  const model = new RegistrationRequest();
-
-  model.firstname = ctx.request.body.firstname.trim();
-  model.lastname = ctx.request.body.lastname.trim();
-  model.username = ctx.request.body.username.trim();
-  model.email = ctx.request.body.email.trim();
-  model.password = ctx.request.body.password.trim();
-
-  const errors = await validate(model);
+  const errors = await validate(
+    RegistrationRequest.from(ctx.request.body),
+    { validationError: { target: false } }
+  );
 
   if (!!errors.length) {
     ctx.status = 400;
-    ctx.body = errors;
+    ctx.body = _.map(errors, util.errorFormalize);
     return;
   }
 

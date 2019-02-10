@@ -1,31 +1,37 @@
-import { Length, IsEmail } from 'class-validator';
+import { Length, IsEmail, IsNotEmpty } from 'class-validator';
+import * as util from '../../util';
 
 export class RegistrationRequest {
 
-  @Length(6, 32, {
-    message: 'Sorry, your firstname must be between $constraint1 and $constraint2 characters long.'
-  })
+  @IsNotEmpty({ message: 'Sorry, $property is required.' })
+  @Length(6, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   firstname: string;
 
-  @Length(6, 32, {
-    message: 'Sorry, your lastname must be between $constraint1 and $constraint2 characters long.'
-  })
+  @IsNotEmpty({ message: 'Sorry, $property is required.' })
+  @Length(6, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   lastname: string;
 
-  @Length(4, 20, {
-    message: 'Sorry, your username must be between $constraint1 and $constraint2 characters long.'
-  })
+  @IsNotEmpty({ message: 'Sorry, $property is required.' })
+  @Length(4, 20, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   username: string;
 
-  @IsEmail({}, {
-    message: 'Sorry, your email is invalid.'
-  })
+  @IsNotEmpty({ message: 'Sorry, $property is required.' })
+  @IsEmail({}, { message: 'Sorry, email is invalid.' })
   email: string;
 
-  @Length(6, 32, {
-    message: 'Use 8 characters or more for your password'
-  })
+  @IsNotEmpty({ message: 'Sorry, $property is required.' })
+  @Length(6, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   password: string;
+
+  static from(json: any) {
+    const model = new RegistrationRequest();
+    model.firstname = util.trim(json.firstname);
+    model.lastname = util.trim(json.lastname);
+    model.username = util.trim(json.username);
+    model.email = util.trim(json.email);
+    model.password = util.trim(json.password);
+    return model;
+  }
 
 }
 
