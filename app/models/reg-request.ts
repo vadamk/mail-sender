@@ -6,7 +6,7 @@ export class ResolveRegistrationRequest {
   accept: boolean;
 
   @IsNotEmpty({ message: 'Sorry, $property is required.' })
-  @IsMongoId({ message: 'Sorry, $property isn\'t mongoId type.' })
+  @IsMongoId({ message: 'Sorry, $property is wrong.' })
   id: string;
 
   static from(json: any) {

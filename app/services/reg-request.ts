@@ -8,12 +8,28 @@ import { REGISTRATION_REQUESTS, USERS } from '../models/collections';
 import { ResolveRegistrationRequest } from '../models/reg-request';
 
 export const getRegistrationRequests = async (ctx: Context) => {
-  ctx.body = await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray();
+  ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
 };
 
 export const getRegistrationRequestById = async (ctx: Context) => {
+
+  if (!util.isMongoId(ctx.params.id)) {
+    ctx.status = 400;
+    ctx.body = { message: 'Success! Registration request id is wrong.' };
+    return;
+  }
+
   const query = { _id: new ObjectId(ctx.params.id) };
-  ctx.body = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
+  const regReq = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
+
+  if (!regReq) {
+    ctx.status = 404;
+    ctx.body = { message: 'Sory, registration request with this id was not found.' };
+    return;
+  }
+
+  ctx.status = 200;
+  ctx.body = { data: regReq };
 };
 
 export const validateResolveRegistrationRequest = async (ctx: Context, next: Function) => {
