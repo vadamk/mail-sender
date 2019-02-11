@@ -4,11 +4,11 @@ import * as util from '../../util';
 export class RegistrationRequest {
 
   @IsNotEmpty({ message: 'Sorry, $property is required.' })
-  @Length(6, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
+  @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   firstname: string;
 
   @IsNotEmpty({ message: 'Sorry, $property is required.' })
-  @Length(6, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
+  @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   lastname: string;
 
   @IsNotEmpty({ message: 'Sorry, $property is required.' })

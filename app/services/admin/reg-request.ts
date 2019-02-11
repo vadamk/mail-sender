@@ -6,6 +6,9 @@ import * as util from '../../util';
 import { Context } from '../../models/common';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
+import { sendMessage } from '../email';
+import { RegistrationRequest } from '../../models/auth';
+import { config } from '../../config';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
@@ -53,7 +56,7 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
   const { id, accept } = ctx.request.body;
 
   const query = { _id: new ObjectId(id) };
-  const regReq = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
+  const regReq: RegistrationRequest = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
 
   if (!regReq) {
     ctx.status = 400;
@@ -65,6 +68,16 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
 
   if (Boolean(accept)) {
     await ctx.db.collection(USERS).insertOne(util.exceptMongoId(regReq));
+    await sendMessage({
+      to: regReq.email,
+      subject: 'Congratulations! You are approved.',
+      html: `
+        <h1>Wellcome!<h1>
+        <p>Hi ${regReq.firstname} ${regReq.lastname},</p>
+        <p>Congratulations! You are approved.</p>
+        <a href="${config.home}"></a>
+      `
+    });
   }
 
   const message = Boolean(accept)
