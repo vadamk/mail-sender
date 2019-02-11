@@ -1,10 +1,11 @@
 import { validate } from 'class-validator';
 import * as _ from 'lodash';
+import { hash } from 'bcrypt';
 
-import { REGISTRATION_REQUESTS } from '../../models/collections';
+import { config } from '../../config';
+import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
 import { Context } from '../../models/common';
-import * as util from '../../util';
 
 export const registrationRequestValidator = async (ctx: Context, next: Function) => {
 
@@ -15,7 +16,7 @@ export const registrationRequestValidator = async (ctx: Context, next: Function)
 
   if (!!errors.length) {
     ctx.status = 400;
-    ctx.body = _.map(errors, util.errorFormalize);
+    ctx.body = errors;
     return;
   }
 
@@ -26,10 +27,16 @@ export const registrationRequest = async (ctx: Context) => {
 
   const model: RegistrationRequest = ctx.request.body;
 
-  const collection = await ctx.db.collection(REGISTRATION_REQUESTS);
-  const users = await collection.find({ 'email': model.email }).toArray();
+  const rrCollection = await ctx.db.collection(REGISTRATION_REQUESTS);
+  const uCollection = await ctx.db.collection(USERS);
+  const users = [
+    ...await rrCollection.find({ 'email': model.email }).toArray(),
+    ...await uCollection.find({ 'email': model.email }).toArray()
+  ];
 
   if (!users.length) {
+    model.password = await hash(model.password, config.saltRounds);
+
     await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(model);
     ctx.status = 201;
     ctx.body = { message: 'Success! Registration request has been created. Please wait for approving.' };
