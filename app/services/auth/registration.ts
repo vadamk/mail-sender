@@ -25,19 +25,17 @@ export const registrationRequestValidator = async (ctx: Context, next: Function)
 
 export const registrationRequest = async (ctx: Context) => {
 
-  const model: RegistrationRequest = ctx.request.body;
+  const reqBody: RegistrationRequest = ctx.request.body;
 
   const rrCollection = await ctx.db.collection(REGISTRATION_REQUESTS);
   const uCollection = await ctx.db.collection(USERS);
-  const users = [
-    ...await rrCollection.find({ 'email': model.email }).toArray(),
-    ...await uCollection.find({ 'email': model.email }).toArray()
-  ];
+  const query = { 'email': reqBody.email };
+  const users = [await rrCollection.findOne(query), await uCollection.findOne(query)];
 
   if (!users.length) {
-    model.password = await hash(model.password, config.saltRounds);
+    reqBody.password = await hash(reqBody.password, config.saltRounds);
 
-    await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(model);
+    await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(reqBody);
     ctx.status = 201;
     ctx.body = { message: 'Success! Registration request has been created. Please wait for approving.' };
   } else {

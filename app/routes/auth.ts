@@ -1,23 +1,18 @@
 import * as Router from 'koa-router';
-import { sign } from '../jwt';
 
 import {
   registrationRequest,
   registrationRequestValidator
 } from '../services/auth/registration';
+import {
+  loginRequestValidator,
+  loginRequest
+} from '../services/auth/login';
 
 const router = new Router();
 
-router.get('/login', async ctx => {
-  ctx.body = {
-    token: sign()
-  };
-});
+router.post('/login', loginRequestValidator, loginRequest);
 
-router.post(
-  '/registration',
-  registrationRequestValidator,
-  registrationRequest
-);
+router.post('/registration', registrationRequestValidator, registrationRequest);
 
 export default router;
