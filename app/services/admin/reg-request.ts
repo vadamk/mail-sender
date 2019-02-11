@@ -8,7 +8,7 @@ import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
 import { sendMessage } from '../email';
 import { RegistrationRequest } from '../../models/auth';
-import { config } from '../../config';
+import { requestAccept } from '../../templates/email/reqistration/inedx';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
@@ -71,12 +71,7 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
     await sendMessage({
       to: regReq.email,
       subject: 'Congratulations! You are approved.',
-      html: `
-        <h1>Wellcome!<h1>
-        <p>Hi ${regReq.firstname} ${regReq.lastname},</p>
-        <p>Congratulations! You are approved.</p>
-        <a href="${config.home}"></a>
-      `
+      html: requestAccept(regReq.firstname, regReq.lastname)
     });
   }
 

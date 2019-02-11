@@ -6,7 +6,8 @@
     "outDir": "./dist",
     "sourceMap": true,
     "experimentalDecorators": true,
-    "allowJs": true
+    "allowJs": true,
+    "esModuleInterop": true
   },
   "types": [
     "mocha"

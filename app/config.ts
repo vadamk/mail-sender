@@ -1,5 +1,6 @@
 export interface IConfig {
   home: string;
+  admin: string;
   port: number;
   saltRounds: number;
 }
@@ -19,6 +20,7 @@ export interface IEmail {
 
 export const config: IConfig = {
   home: 'https://shambhala.org/',
+  admin: 'volodymyr.kravch@gmail.com',
   port: parseInt(process.env.NODE_PORT, 10) || 3000,
   saltRounds: 10
 };
