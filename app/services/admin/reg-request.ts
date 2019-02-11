@@ -2,10 +2,10 @@ import { ObjectId } from 'mongodb';
 import { validate } from 'class-validator';
 import * as _ from 'lodash';
 
-import * as util from '../util';
-import { Context } from '../models/common';
-import { REGISTRATION_REQUESTS, USERS } from '../models/collections';
-import { ResolveRegistrationRequest } from '../models/reg-request';
+import * as util from '../../util';
+import { Context } from '../../models/common';
+import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
+import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
@@ -68,8 +68,8 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
   }
 
   const message = Boolean(accept)
-    ? 'Success! Registration request has been rejected.'
-    : 'Success! Registration request has been accepted.';
+    ? 'Success! Registration request has been accepted.'
+    : 'Success! Registration request has been rejected.';
 
   ctx.status = 200;
   ctx.body = { message };

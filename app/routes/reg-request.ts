@@ -4,7 +4,7 @@ import {
   getRegistrationRequestById,
   resolveRegistrationRequest,
   validateResolveRegistrationRequest
-} from '../services/reg-request';
+} from '../services/admin/reg-request';
 
 
 const router = new Router();
