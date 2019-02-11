@@ -9,3 +9,14 @@ export const errorFormalize = (error: ValidationError) => {
     messages: _.values(error.constraints)
   };
 };
+
+export const exceptMongoId = (model: any) => {
+
+  if (typeof model !== 'object') {
+    return model;
+  }
+
+  const { _id, ...pureModel } = model;
+
+  return pureModel;
+};

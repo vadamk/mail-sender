@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import * as _ from 'lodash';
 
-import { REGISTRATION_REQUEST } from '../../models/collections';
+import { REGISTRATION_REQUESTS } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
 import { Context } from '../../models/common';
 import * as util from '../../util';
@@ -26,13 +26,13 @@ export const registrationRequest = async (ctx: Context) => {
 
   const model: RegistrationRequest = ctx.request.body;
 
-  const collection = await ctx.db.collection(REGISTRATION_REQUEST);
+  const collection = await ctx.db.collection(REGISTRATION_REQUESTS);
   const users = await collection.find({ 'email': model.email }).toArray();
 
   if (!users.length) {
-    await ctx.db.collection(REGISTRATION_REQUEST).insertOne(model);
+    await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(model);
     ctx.status = 201;
-    ctx.body = { message: 'Registration request has been created. Please wait for approving.' };
+    ctx.body = { message: 'Success! Registration request has been created. Please wait for approving.' };
   } else {
     ctx.status = 400;
     ctx.body = { message: 'Sorry, this email already using.' };

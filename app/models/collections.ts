@@ -1,2 +1,2 @@
-export const REGISTRATION_REQUEST = 'registration-requests';
+export const REGISTRATION_REQUESTS = 'registration-requests';
 export const USERS = 'users';

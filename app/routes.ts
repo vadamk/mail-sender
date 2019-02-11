@@ -3,6 +3,7 @@ import * as Router from 'koa-router';
 import { jwt } from './jwt';
 
 import Auth from './routes/auth';
+import RegistrationRequest from './routes/reg-request';
 import Person from './routes/person';
 
 const router = new Router();
@@ -16,6 +17,11 @@ router.get('/', async ctx => ctx.body = 'OK');
  * Auth
  */
 router.use('/auth', Auth.routes(), Auth.allowedMethods());
+
+/**
+ * Registration requests
+ */
+router.use('/registration-requests', RegistrationRequest.routes(), RegistrationRequest.allowedMethods());
 
 /**
  * Person

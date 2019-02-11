@@ -6,7 +6,7 @@ const serve = require('koa-static');
 const koaValidator = require('koa-async-validator');
 const koaSwagger = require('koa2-swagger-ui');
 const koaBunyanLogger = require('koa-bunyan-logger');
-const mongo = require('koa-mongo')
+const mongo = require('koa-mongo');
 
 import { config } from './config';
 import { routes } from './routes';
