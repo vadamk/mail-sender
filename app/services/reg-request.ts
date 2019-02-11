@@ -15,7 +15,7 @@ export const getRegistrationRequestById = async (ctx: Context) => {
 
   if (!util.isMongoId(ctx.params.id)) {
     ctx.status = 400;
-    ctx.body = { message: 'Success! Registration request id is wrong.' };
+    ctx.body = { message: 'Sory, registration request id is wrong.' };
     return;
   }
 
@@ -54,16 +54,22 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
 
   const query = { _id: new ObjectId(id) };
   const regReq = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
-  await ctx.db.collection(REGISTRATION_REQUESTS).deleteOne(query);
 
-  let message;
+  if (!regReq) {
+    ctx.status = 400;
+    ctx.body = { message: 'Sorry, registration request id is wrong.' };
+    return;
+  }
+
+  await ctx.db.collection(REGISTRATION_REQUESTS).deleteOne(query);
 
   if (Boolean(accept)) {
     await ctx.db.collection(USERS).insertOne(util.exceptMongoId(regReq));
-    message = 'Success! Registration request has been accepted.';
-  } else {
-    message = 'Success! Registration request has been rejected.';
   }
+
+  const message = Boolean(accept)
+    ? 'Success! Registration request has been rejected.'
+    : 'Success! Registration request has been accepted.';
 
   ctx.status = 200;
   ctx.body = { message };

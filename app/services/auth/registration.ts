@@ -27,12 +27,11 @@ export const registrationRequest = async (ctx: Context) => {
 
   const reqBody: RegistrationRequest = ctx.request.body;
 
-  const rrCollection = await ctx.db.collection(REGISTRATION_REQUESTS);
-  const uCollection = await ctx.db.collection(USERS);
   const query = { 'email': reqBody.email };
-  const users = [await rrCollection.findOne(query), await uCollection.findOne(query)];
+  const user = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
+  const regRequest = await ctx.db.collection(USERS).findOne(query);
 
-  if (!users.length) {
+  if (!user && !regRequest) {
     reqBody.password = await hash(reqBody.password, config.saltRounds);
 
     await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(reqBody);

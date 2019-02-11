@@ -10,7 +10,7 @@ export const isMongoId = (id: string): boolean => {
 
 export const exceptMongoId = (model: any) => {
 
-  if (typeof model !== 'object') {
+  if (!_.isObject(model)) {
     return model;
   }
 
