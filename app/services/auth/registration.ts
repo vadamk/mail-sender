@@ -6,6 +6,8 @@ import { config } from '../../config';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
 import { Context } from '../../models/common';
+import { sendMessage } from '../email';
+import { thxForRegistrationMail } from '../../templates/email/reqistration';
 
 export const registrationRequestValidator = async (ctx: Context, next: Function) => {
 
@@ -33,8 +35,13 @@ export const registrationRequest = async (ctx: Context) => {
 
   if (!user && !regRequest) {
     reqBody.password = await hash(reqBody.password, config.saltRounds);
-
     await ctx.db.collection(REGISTRATION_REQUESTS).insertOne(reqBody);
+    sendMessage({
+      to: reqBody.email,
+      subject: 'Дякуюємо за реєстрацію!',
+      html: thxForRegistrationMail(reqBody.firstname, reqBody.lastname).html,
+      text: thxForRegistrationMail(reqBody.firstname, reqBody.lastname).text
+    });
     ctx.status = 201;
     ctx.body = { message: 'Success! Registration request has been created. Please wait for approving.' };
   } else {

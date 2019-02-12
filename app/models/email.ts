@@ -8,3 +8,8 @@ export class EmailOptions {
 export class FullEmailOptions extends EmailOptions {
   from: string;
 }
+
+export class MjmlResult {
+  html: string;
+  text: string;
+}

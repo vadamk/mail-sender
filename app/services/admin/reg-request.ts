@@ -6,9 +6,12 @@ import * as util from '../../util';
 import { Context } from '../../models/common';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
-import { sendMessage } from '../email';
 import { RegistrationRequest } from '../../models/auth';
-import { requestAccept } from '../../templates/email/reqistration';
+import { sendMessage } from '../email';
+import {
+  registrationReqRejectMail,
+  registrationReqAcceptMail
+} from '../../templates/email/reqistration';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
@@ -68,10 +71,18 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
 
   if (Boolean(accept)) {
     await ctx.db.collection(USERS).insertOne(util.exceptMongoId(regReq));
-    await sendMessage({
+    sendMessage({
       to: regReq.email,
-      subject: 'Congratulations! You are approved.',
-      html: requestAccept(regReq.firstname, regReq.lastname)
+      subject: 'Вітаємо! Ваша заявка на реєстрацію прийнята.',
+      html: registrationReqAcceptMail(regReq.firstname, regReq.lastname).html,
+      text: registrationReqAcceptMail(regReq.firstname, regReq.lastname).text
+    });
+  } else {
+    sendMessage({
+      to: regReq.email,
+      subject: 'На жаль, ваш запит на реєстрацію відхилено.',
+      html: registrationReqRejectMail(regReq.firstname, regReq.lastname).html,
+      text: registrationReqRejectMail(regReq.firstname, regReq.lastname).text
     });
   }
 
