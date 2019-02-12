@@ -32,7 +32,7 @@ export const requestAccept = (firstname: string, lastname: string): string => {
       <mj-section
         full-width="full-width"
         background-color="#FFFFFF">
-        <mj-column>
+        <mj-column padding="0 30px">
           <mj-text
             font-size="18px"
             line-height="27px"
