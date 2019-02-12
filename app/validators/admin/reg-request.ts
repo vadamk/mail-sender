@@ -3,7 +3,7 @@ import { Context } from '../../models/common';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
 import * as util from '../../util';
 
-export const getRegistrationRequestByIdValidator = async (ctx: Context, next: Function) => {
+export const validateGetRegistrationRequestById = async (ctx: Context, next: Function) => {
 
   if (!util.isMongoId(ctx.params.id)) {
     ctx.status = 400;

@@ -1,12 +1,12 @@
 const jwtSecret = require('koa-jwt');
 
-import { sign as jwtSing, SignOptions } from 'jsonwebtoken';
+import { sign, SignOptions } from 'jsonwebtoken';
 
 const SECRET = 'some-secret';
 
-export const sign = (
+export const jwtSing = (
   payload: string | object | Buffer = {},
   options?: SignOptions
-) => jwtSing(payload, SECRET, options);
+) => sign(payload, SECRET, options);
 
-export const jwt = jwtSecret({ secret: SECRET });
+export const jwtGuard = jwtSecret({ secret: SECRET });

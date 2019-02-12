@@ -9,7 +9,7 @@ const koaBunyanLogger = require('koa-bunyan-logger');
 const mongo = require('koa-mongo');
 
 import { config } from './config';
-import { routes } from './routes';
+import { routes } from './router';
 import { logger } from './logger';
 
 const app = new Koa();

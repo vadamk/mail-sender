@@ -2,7 +2,7 @@ import { validate } from 'class-validator';
 import { Context } from '../../models/common';
 import { LoginRequest } from '../../models/auth/login';
 
-export const loginRequestValidator = async (ctx: Context, next: Function) => {
+export const validateLoginRequest = async (ctx: Context, next: Function) => {
 
   const errors = await validate(
     LoginRequest.from(ctx.request.body),

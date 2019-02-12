@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { compare } from 'bcrypt';
 
-import { sign } from '../../jwt';
+import { jwtSing } from '../../jwt';
 import { USERS } from '../../models/collections';
 import { LoginRequest } from '../../models/auth';
 import { Context } from '../../models/common';
@@ -15,7 +15,7 @@ export const loginRequest = async (ctx: Context) => {
 
   if (user && verified) {
     ctx.status = 200;
-    ctx.body = { token: sign(user) };
+    ctx.body = { token: jwtSing(user) };
   } else {
     ctx.status = 400;
     ctx.body = { message: 'Sorry, user doen\'t exists or password is wrong.' };

@@ -7,11 +7,11 @@ import {
 
 import {
   validateResolveRegistrationRequest,
-  getRegistrationRequestByIdValidator
+  validateGetRegistrationRequestById
 } from '../validators/admin/reg-request';
 
-export default new Router()
-  .get('/', getRegistrationRequests)
-  .get('/:id', getRegistrationRequestByIdValidator, getRegistrationRequestById)
-  .post('/', validateResolveRegistrationRequest, resolveRegistrationRequest);
+export const regRequestRouter = new Router()
+  .get('registration-requests/', getRegistrationRequests)
+  .get('registration-requests/:id', validateGetRegistrationRequestById, getRegistrationRequestById)
+  .post('registration-requests/', validateResolveRegistrationRequest, resolveRegistrationRequest);
 

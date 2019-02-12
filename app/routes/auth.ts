@@ -4,11 +4,11 @@ import { loginRequest } from '../controllers/auth/login';
 import { registrationRequest } from '../controllers/auth/registration';
 
 import {
-  loginRequestValidator,
-  registrationRequestValidator
+  validateLoginRequest,
+  validateRegistrationRequest
 } from '../validators/auth';
 
-export default new Router()
-  .post('/login', loginRequestValidator, loginRequest)
-  .post('/registration', registrationRequestValidator, registrationRequest);
+export const authRouter = new Router()
+  .post('auth/login', validateLoginRequest, loginRequest)
+  .post('auth/registration', validateRegistrationRequest, registrationRequest);
 
