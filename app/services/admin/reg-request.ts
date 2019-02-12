@@ -8,7 +8,7 @@ import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
 import { sendMessage } from '../email';
 import { RegistrationRequest } from '../../models/auth';
-import { requestAccept } from '../../templates/email/reqistration/inedx';
+import { requestAccept } from '../../templates/email/reqistration';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };

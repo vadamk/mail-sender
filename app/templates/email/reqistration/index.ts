@@ -1,4 +1,4 @@
-import mjml2html from 'mjml';
+const mjml2html = require('mjml');
 import { config } from '../../../config';
 
 export const requestAccept = (firstname: string, lastname: string): string => {

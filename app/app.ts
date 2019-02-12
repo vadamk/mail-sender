@@ -18,9 +18,9 @@ app.use(koaBody());
 app.use(mongo());
 app.use(koaValidator());
 app.use(cors());
-// app.use(koaBunyanLogger(logger));
-// app.use(koaBunyanLogger.requestLogger());
-// app.use(koaBunyanLogger.timeContext());
+app.use(koaBunyanLogger(logger));
+app.use(koaBunyanLogger.requestLogger());
+app.use(koaBunyanLogger.timeContext());
 app.use(routes);
 app.use(serve('public'));
 app.use(
