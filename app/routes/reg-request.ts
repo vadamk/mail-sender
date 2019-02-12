@@ -3,16 +3,15 @@ import {
   getRegistrationRequests,
   getRegistrationRequestById,
   resolveRegistrationRequest,
-  validateResolveRegistrationRequest
 } from '../controllers/admin/reg-request';
 
+import {
+  validateResolveRegistrationRequest,
+  getRegistrationRequestByIdValidator
+} from '../validators/admin/reg-request';
 
-const router = new Router();
+export default new Router()
+  .get('/', getRegistrationRequests)
+  .get('/:id', getRegistrationRequestByIdValidator, getRegistrationRequestById)
+  .post('/', validateResolveRegistrationRequest, resolveRegistrationRequest);
 
-router.get('/', getRegistrationRequests);
-
-router.get('/:id', getRegistrationRequestById);
-
-router.post('/', validateResolveRegistrationRequest, resolveRegistrationRequest);
-
-export default router;

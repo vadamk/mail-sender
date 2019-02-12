@@ -1,4 +1,3 @@
-import { validate } from 'class-validator';
 import * as _ from 'lodash';
 import { compare } from 'bcrypt';
 
@@ -6,22 +5,6 @@ import { sign } from '../../jwt';
 import { USERS } from '../../models/collections';
 import { LoginRequest } from '../../models/auth';
 import { Context } from '../../models/common';
-
-export const loginRequestValidator = async (ctx: Context, next: Function) => {
-
-  const errors = await validate(
-    LoginRequest.from(ctx.request.body),
-    { validationError: { target: false } }
-  );
-
-  if (!!errors.length) {
-    ctx.status = 400;
-    ctx.body = errors;
-    return;
-  }
-
-  await next();
-};
 
 export const loginRequest = async (ctx: Context) => {
 

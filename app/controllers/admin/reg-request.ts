@@ -1,13 +1,11 @@
 import { ObjectId } from 'mongodb';
-import { validate } from 'class-validator';
 import * as _ from 'lodash';
 
 import * as util from '../../util';
 import { Context } from '../../models/common';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
-import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
 import { RegistrationRequest } from '../../models/auth';
-import { sendMessage } from '../email';
+import { sendMessage } from '../../services/email';
 import {
   registrationReqRejectMail,
   registrationReqAcceptMail
@@ -18,12 +16,6 @@ export const getRegistrationRequests = async (ctx: Context) => {
 };
 
 export const getRegistrationRequestById = async (ctx: Context) => {
-
-  if (!util.isMongoId(ctx.params.id)) {
-    ctx.status = 400;
-    ctx.body = { message: 'Sory, registration request id is wrong.' };
-    return;
-  }
 
   const query = { _id: new ObjectId(ctx.params.id) };
   const regReq = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
@@ -36,22 +28,6 @@ export const getRegistrationRequestById = async (ctx: Context) => {
 
   ctx.status = 200;
   ctx.body = { data: regReq };
-};
-
-export const validateResolveRegistrationRequest = async (ctx: Context, next: Function) => {
-
-  const errors = await validate(
-    ResolveRegistrationRequest.from(ctx.request.body),
-    { validationError: { target: false } }
-  );
-
-  if (!!errors.length) {
-    ctx.status = 400;
-    ctx.body = errors;
-    return;
-  }
-
-  await next();
 };
 
 export const resolveRegistrationRequest = async (ctx: Context) => {

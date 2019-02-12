@@ -1,18 +1,14 @@
 import * as Router from 'koa-router';
 
-import {
-  registrationRequest,
-  registrationRequestValidator
-} from '../controllers/auth/registration';
+import { loginRequest } from '../controllers/auth/login';
+import { registrationRequest } from '../controllers/auth/registration';
+
 import {
   loginRequestValidator,
-  loginRequest
-} from '../controllers/auth/login';
+  registrationRequestValidator
+} from '../validators/auth';
 
-const router = new Router();
+export default new Router()
+  .post('/login', loginRequestValidator, loginRequest)
+  .post('/registration', registrationRequestValidator, registrationRequest);
 
-router.post('/login', loginRequestValidator, loginRequest);
-
-router.post('/registration', registrationRequestValidator, registrationRequest);
-
-export default router;

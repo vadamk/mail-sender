@@ -1,4 +1,3 @@
-import { validate } from 'class-validator';
 import * as _ from 'lodash';
 import { hash } from 'bcrypt';
 
@@ -6,24 +5,8 @@ import { config } from '../../config';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
 import { Context } from '../../models/common';
-import { sendMessage } from '../email';
+import { sendMessage } from '../../services/email';
 import { thxForRegistrationMail } from '../../templates/email/reqistration';
-
-export const registrationRequestValidator = async (ctx: Context, next: Function) => {
-
-  const errors = await validate(
-    RegistrationRequest.from(ctx.request.body),
-    { validationError: { target: false } }
-  );
-
-  if (!!errors.length) {
-    ctx.status = 400;
-    ctx.body = errors;
-    return;
-  }
-
-  await next();
-};
 
 export const registrationRequest = async (ctx: Context) => {
 
