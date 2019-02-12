@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { Context } from '../../models/common';
 import { ResolveRegistrationRequest } from '../../models/admin/reg-request';
-import * as util from '../../util';
+import * as util from '../../utils';
 
 export const validateGetRegistrationRequestById = async (ctx: Context, next: Function) => {
 

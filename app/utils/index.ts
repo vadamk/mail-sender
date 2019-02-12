@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { Validator } from 'class-validator';
-import { MjmlResult } from './models/email';
+import { MjmlResult } from '../models/email';
 
 const h2p = require('html2plaintext');
 const mjml2html = require('mjml');

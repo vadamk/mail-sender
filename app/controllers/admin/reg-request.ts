@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import * as _ from 'lodash';
 
-import * as util from '../../util';
+import * as util from '../../utils';
 import { Context } from '../../models/common';
 import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import { RegistrationRequest } from '../../models/auth';
@@ -12,7 +12,9 @@ import {
 } from '../../templates/email/reqistration';
 
 export const getRegistrationRequests = async (ctx: Context) => {
-  ctx.body = { data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray() };
+  ctx.body = {
+    data: await ctx.db.collection(REGISTRATION_REQUESTS).find().toArray()
+  };
 };
 
 export const getRegistrationRequestById = async (ctx: Context) => {

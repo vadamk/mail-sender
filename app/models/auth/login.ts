@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import * as util from '../../util';
+import * as util from '../../utils';
 
 export class LoginRequest {
 
