@@ -1,6 +1,6 @@
 import { config } from '../../../config';
-import { mjmlConverter } from '../../../services/email';
 import { MjmlResult } from '../../../models/email';
+import { mjmlConverter } from '../../../util';
 
 export const registrationReqAcceptMail = (
   firstname: string,

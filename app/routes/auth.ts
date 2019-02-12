@@ -3,11 +3,11 @@ import * as Router from 'koa-router';
 import {
   registrationRequest,
   registrationRequestValidator
-} from '../services/auth/registration';
+} from '../controllers/auth/registration';
 import {
   loginRequestValidator,
   loginRequest
-} from '../services/auth/login';
+} from '../controllers/auth/login';
 
 const router = new Router();
 
