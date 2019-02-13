@@ -8,7 +8,7 @@ import {
 import {
   validateResolveRegistrationRequest,
   validateGetRegistrationRequestById
-} from '../validators/admin/reg-request';
+} from '../validators/admin';
 
 export const regRequestRouter = new Router()
   .get('registration-requests/', getRegistrationRequests)
