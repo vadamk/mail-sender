@@ -1,5 +1,5 @@
 import { Length, IsEmail, IsNotEmpty } from 'class-validator';
-import * as util from '../../utils';
+import { trim } from '../../../utils';
 
 export class RegistrationRequest {
 
@@ -25,11 +25,11 @@ export class RegistrationRequest {
 
   static from(json: any) {
     const model = new RegistrationRequest();
-    model.firstname = util.trim(json.firstname);
-    model.lastname = util.trim(json.lastname);
-    model.username = util.trim(json.username);
-    model.email = util.trim(json.email);
-    model.password = util.trim(json.password);
+    model.firstname = trim(json.firstname);
+    model.lastname = trim(json.lastname);
+    model.username = trim(json.username);
+    model.email = trim(json.email);
+    model.password = trim(json.password);
     return model;
   }
 

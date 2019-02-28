@@ -1,5 +1,6 @@
 export const REGISTRATION_REQUESTS = 'registration-requests';
 export const USERS = 'users';
+export const GROUPS = 'groups';
 export const PERSONS = 'persons';
-export const TELEGRAM_OUTLETS = 'telegram-outlets';
-export const VIBER_OUTLETS = 'viber-groups-outlets';
+export const TELEGRAM_CHANELS = 'telegram-chanels';
+export const VIBER_GROUPS = 'viber-groups-groups';

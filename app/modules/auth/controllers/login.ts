@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 import { compare } from 'bcrypt';
 
-import { jwtSing } from '../../jwt';
-import { USERS } from '../../models/collections';
-import { LoginRequest } from '../../models/auth';
-import { Context } from '../../models/common';
+import { jwtSing } from '../../../jwt';
+import { USERS } from '../../../models/collections';
+import { LoginRequest } from '../models';
+import { Context } from '../../../models';
 
 export const loginRequest = async (ctx: Context) => {
 

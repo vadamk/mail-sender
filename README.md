@@ -1,4 +1,4 @@
-# Mail sender
+# MANAGER
 
 ## Installation
 
@@ -69,3 +69,13 @@ npm run image:build -- --no-cache
 ## API
 
 For a swagger version of this documention, see http://localhost:3000/swagger (requires this server to be running).
+
+--- 
+
+## Problems
+
+### Problem 1: Models
+
+  * entity database
+  * response
+  * request

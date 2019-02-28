@@ -18,6 +18,10 @@ export interface IEmail {
   };
 }
 
+export interface ITelegram {
+  botToken: string;
+}
+
 export const config: IConfig = {
   home: 'https://shambhala.org/',
   admin: 'volodymyr.kravch@gmail.com',
@@ -36,4 +40,8 @@ export const email: IEmail = {
       pass: '19950721Av'
     }
   }
+};
+
+export const telegram: ITelegram = {
+  botToken: '786075752:AAE2VQ4DNo6y3gEqiEfavXiJuOwUWpUMYBM',
 };

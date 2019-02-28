@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import * as util from '../../utils';
+import * as util from '../../../utils';
 
 export class LoginRequest {
 
@@ -17,7 +17,3 @@ export class LoginRequest {
     return model;
   }
 }
-
-
-
-

@@ -3,13 +3,14 @@ import * as _ from 'lodash';
 
 import * as util from '../../utils';
 import { Context } from '../../models/common';
-import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
-import { RegistrationRequest } from '../../models/auth';
 import { sendMessage } from '../../services/email';
+import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
+
 import {
   registrationReqRejectMail,
   registrationReqAcceptMail
 } from '../../templates/email/reqistration';
+import { ResolveRegistrationRequest } from './models';
 
 export const getRegistrationRequests = async (ctx: Context) => {
   ctx.body = {
@@ -34,10 +35,10 @@ export const getRegistrationRequestById = async (ctx: Context) => {
 
 export const resolveRegistrationRequest = async (ctx: Context) => {
 
-  const { id, accept } = ctx.request.body;
+  const requestBody: ResolveRegistrationRequest = ctx.request.body;
 
-  const query = { _id: new ObjectId(id) };
-  const regReq: RegistrationRequest = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
+  const query = { _id: new ObjectId(requestBody.id) };
+  const regReq = await ctx.db.collection(REGISTRATION_REQUESTS).findOne(query);
 
   if (!regReq) {
     ctx.status = 400;
@@ -47,7 +48,7 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
 
   await ctx.db.collection(REGISTRATION_REQUESTS).deleteOne(query);
 
-  if (Boolean(accept)) {
+  if (Boolean(requestBody.accept)) {
     await ctx.db.collection(USERS).insertOne(util.exceptMongoId(regReq));
     sendMessage({
       to: regReq.email,
@@ -64,7 +65,7 @@ export const resolveRegistrationRequest = async (ctx: Context) => {
     });
   }
 
-  const message = Boolean(accept)
+  const message = Boolean(requestBody.accept)
     ? 'Success! Registration request has been accepted.'
     : 'Success! Registration request has been rejected.';
 
