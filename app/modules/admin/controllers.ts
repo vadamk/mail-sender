@@ -9,7 +9,8 @@ import { REGISTRATION_REQUESTS, USERS } from '../../models/collections';
 import {
   registrationReqRejectMail,
   registrationReqAcceptMail
-} from '../../templates/email/reqistration';
+} from './templates';
+
 import { ResolveRegistrationRequest } from './models';
 
 export const getRegistrationRequests = async (ctx: Context) => {
