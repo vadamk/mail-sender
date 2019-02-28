@@ -6,7 +6,7 @@ import { REGISTRATION_REQUESTS, USERS } from '../../../models/collections';
 import { RegistrationRequest } from '../models';
 import { Context } from '../../../models/common';
 import { sendMessage } from '../../../services/email';
-import { thxForRegistrationMail } from '../../../templates/email/reqistration';
+import { thxForRegistrationMail } from '../templates';
 
 export const registrationRequest = async (ctx: Context) => {
 
