@@ -2,7 +2,7 @@ import { config } from '../../../config';
 import { MjmlResult } from '../../../models/email';
 import { mjmlConverter } from '../../../utils';
 
-export const registrationReqAcceptMail = (
+export const thxForRegistrationMail = (
   firstname: string,
   lastname: string
 ): MjmlResult => mjmlConverter(`<mjml>
@@ -27,7 +27,7 @@ export const registrationReqAcceptMail = (
             font-size="48px"
             align="center"
             font-family="Lato, Arial">
-            Вітаємо
+            Дякуюємо за реєстрацію!
           </mj-text>
         </mj-column>
       </mj-section>
@@ -46,21 +46,13 @@ export const registrationReqAcceptMail = (
             font-size="18px"
             line-height="27px"
             font-family="Lato, Arial">
-            Ваш запит на реєстрацію прийнятий.
-            Це означає, що тепер у Вас є можливість використовувати нашу аплікацію.
+            Протягом робочого дня ви отримаєте E-mail з результатом.
+            Якщо заявка буде прийнята, ви отримаєте доступ до аплікаці.
             Використовуйте логін та пароль, які були вказані Вами під час реєстрації.
           </mj-text>
 
           <mj-spacer height="30px" />
 
-          <mj-button
-            href="${config.home}"
-            font-size="20px"
-            background-color="#F1C232"
-            line-height="27px"
-            font-family="Lato, Arial">
-            Перейти в аплікацію
-          </mj-button>
         </mj-column>
       </mj-section>
 
@@ -77,7 +69,7 @@ export const registrationReqAcceptMail = (
           <mj-text
             font-size="18px"
             line-height="27px"
-            color="#FFFFFF">Більше дізнатися ви може надіславши лист адміністратору на електронну скриньку:
+            color="#FFFFFF">Якщо у вас залишились запитання, надішліть їх адміністратору на електронну скриньку:
           </mj-text>
           <mj-text
             href="mailto:${config.admin}"

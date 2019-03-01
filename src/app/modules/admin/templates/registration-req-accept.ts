@@ -2,7 +2,7 @@ import { config } from '../../../config';
 import { MjmlResult } from '../../../models/email';
 import { mjmlConverter } from '../../../utils';
 
-export const registrationReqRejectMail = (
+export const registrationReqAcceptMail = (
   firstname: string,
   lastname: string
 ): MjmlResult => mjmlConverter(`<mjml>
@@ -27,7 +27,7 @@ export const registrationReqRejectMail = (
             font-size="48px"
             align="center"
             font-family="Lato, Arial">
-            Вибачте
+            Вітаємо
           </mj-text>
         </mj-column>
       </mj-section>
@@ -46,8 +46,9 @@ export const registrationReqRejectMail = (
             font-size="18px"
             line-height="27px"
             font-family="Lato, Arial">
-            На жаль, ваш запит на реєстрацію відхилено.
-            За додатковою інформацією ви можете зв'язатися з нами.
+            Ваш запит на реєстрацію прийнятий.
+            Це означає, що тепер у Вас є можливість використовувати нашу аплікацію.
+            Використовуйте логін та пароль, які були вказані Вами під час реєстрації.
           </mj-text>
 
           <mj-spacer height="30px" />
@@ -76,7 +77,7 @@ export const registrationReqRejectMail = (
           <mj-text
             font-size="18px"
             line-height="27px"
-            color="#FFFFFF">Більше дізнатися ви може надіславши лист адміністратору на електронну скриньку:
+            color="#FFFFFF">Якщо у вас залишились запитання, надішліть їх адміністратору на електронну скриньку:
           </mj-text>
           <mj-text
             href="mailto:${config.admin}"
