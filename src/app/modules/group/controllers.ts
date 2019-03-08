@@ -22,18 +22,18 @@ export const get = async (ctx: Context) => {
   const pipeline = [
     {
       $lookup: {
-        from: PERSONS,
-        localField: 'persons',
-        foreignField: '_id',
-        as: 'persons',
-      }
-    },
-    {
-      $lookup: {
         from: TELEGRAM_CHANNELS,
         localField: 'telegramChannels',
         foreignField: '_id',
         as: 'telegramChannels',
+      }
+    },
+    {
+      $lookup: {
+        from: PERSONS,
+        localField: 'persons',
+        foreignField: '_id',
+        as: 'persons',
       }
     },
     {
@@ -101,6 +101,14 @@ export const create = async (ctx: Context) => {
     newGroup.persons = _.map(requestBody.persons, (person: string) => new ObjectId(person));
   }
 
+  if (requestBody.telegramChannels) {
+    newGroup.telegramChannels = _.map(requestBody.telegramChannels, (channel: string) => new ObjectId(channel));
+  }
+
+  if (requestBody.viberGroups) {
+    newGroup.viberGroups = _.map(requestBody.viberGroups, (group: string) => new ObjectId(group));
+  }
+
   const group = await ctx.db.collection(GROUPS).insertOne(newGroup);
 
   const responseData: CreateGroupResponse = {
@@ -121,6 +129,14 @@ export const update = async (ctx: Context) => {
 
   if (requestBody.persons) {
     newGroup.persons = _.map(requestBody.persons, (person: string) => new ObjectId(person));
+  }
+
+  if (requestBody.telegramChannels) {
+    newGroup.telegramChannels = _.map(requestBody.telegramChannels, (channel: string) => new ObjectId(channel));
+  }
+
+  if (requestBody.viberGroups) {
+    newGroup.viberGroups = _.map(requestBody.viberGroups, (group: string) => new ObjectId(group));
   }
 
   const query = { _id: new ObjectId(ctx.params.id) };

@@ -33,18 +33,18 @@ export const create = async (ctx: Context) => {
 
   const requestBody: CreatePersonRequest = ctx.request.body;
   const query = { email: requestBody.email };
-  const user = await ctx.db.collection(PERSONS).find(query).toArray();
+  const person = await ctx.db.collection(PERSONS).find(query).toArray();
 
-  if (user.length) {
+  if (person.length) {
     ctx.status = 400;
     ctx.body = { message: 'Sorry, this email already exists.' };
     return;
   }
 
-  const person = await ctx.db.collection(PERSONS).insertOne(requestBody);
+  const newPerson = await ctx.db.collection(PERSONS).insertOne(requestBody);
 
   const responseData: CreatePersonResponse = {
-    personId: person.insertedId
+    personId: newPerson.insertedId
   };
 
   ctx.status = 201;
