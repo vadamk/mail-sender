@@ -1,16 +1,22 @@
-import { Length, IsOptional } from 'class-validator';
+import {
+  Length,
+} from 'class-validator';
 
-export class UpdateTgChannelRequest {
+export class CreateViberGroupRequest {
 
-  @IsOptional()
   @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   name: string;
 
-  @IsOptional()
   @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
   description: string;
 
-  @IsOptional()
   @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
-  channelId: string;
+  groupId: string;
+
+}
+
+export class CreateViberGroupResponse {
+
+  groupId: string;
+
 }
