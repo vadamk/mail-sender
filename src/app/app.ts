@@ -11,6 +11,7 @@ const mongo = require('koa-mongo');
 import { config } from './config';
 import { routes } from './routes';
 import { logger } from './logger';
+import { requestDataCleaner } from './utils';
 
 const app = new Koa();
 
@@ -18,9 +19,10 @@ app.use(koaBody());
 app.use(mongo());
 app.use(koaValidator());
 app.use(cors());
-app.use(koaBunyanLogger(logger));
-app.use(koaBunyanLogger.requestLogger());
-app.use(koaBunyanLogger.timeContext());
+// app.use(koaBunyanLogger(logger));
+// app.use(koaBunyanLogger.requestLogger());
+// app.use(koaBunyanLogger.timeContext());
+app.use(requestDataCleaner);
 app.use(routes);
 app.use(serve('public'));
 app.use(

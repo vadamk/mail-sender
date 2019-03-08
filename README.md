@@ -72,10 +72,10 @@ For a swagger version of this documention, see http://localhost:3000/swagger (re
 
 --- 
 
-## Problems
+## Wiki
 
-### Problem 1: Models
-
-  * entity database
-  * response
-  * request
+  * GET /resources to get multiple resources
+  * POST /resources to create new resources
+  * PATCH /resources to update multiple resources
+  * PUT /resources to replace multiple resources
+  * DELETE /resources to delete multiple resources

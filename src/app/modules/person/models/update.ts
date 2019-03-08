@@ -1,31 +1,31 @@
-import { trim } from '../../../utils';
-import { Length, IsEmail, IsPhoneNumber, Allow } from 'class-validator';
+import {
+  Length,
+  IsEmail,
+  IsPhoneNumber,
+  IsOptional,
+  IsBoolean
+} from 'class-validator';
 
 export class UpdatePersonRequest {
 
+  @IsOptional()
   @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
-  firstName: string;
+  firstName?: string;
 
+  @IsOptional()
   @Length(3, 32, { message: 'Sorry, $property must be between $constraint1 and $constraint2 characters long.' })
-  lastName: string;
+  lastName?: string;
 
+  @IsOptional()
   @IsEmail({}, { message: 'Sorry, email is invalid.' })
-  email: string;
+  email?: string;
 
+  @IsOptional()
   @IsPhoneNumber('UA', { message: 'Sorry, phone is invalid.' })
-  phoneNumber: string;
+  phoneNumber?: string;
 
-  @Allow()
-  isMember: boolean;
-
-  static from(json: any) {
-    const model = new UpdatePersonRequest();
-    model.firstName = trim(json.firstName);
-    model.lastName = trim(json.lastName);
-    model.email = trim(json.email);
-    model.phoneNumber = trim(json.phoneNumber);
-    model.isMember = trim(json.isMember);
-    return model;
-  }
+  @IsOptional()
+  @IsBoolean({ message: 'Sorry, $property is not boolean.' })
+  isMember?: boolean;
 
 }

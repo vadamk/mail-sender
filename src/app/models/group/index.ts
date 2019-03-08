@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { Person } from '../person';
 
 export class Group {
 
@@ -8,10 +9,10 @@ export class Group {
 
   description: string;
 
-  telegramChanelId: string;
+  telegramChannels: string[];
 
-  viberGroupId: string;
+  viberGroups: string[];
 
-  persons: ObjectId[];
+  persons: Person[];
 
 }

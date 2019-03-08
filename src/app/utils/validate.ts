@@ -1,4 +1,6 @@
 import { Validator, validate } from 'class-validator';
+import _ = require('lodash');
+import { Middleware } from 'koa';
 import { Context } from '../models/common';
 
 export const isMongoId = (id: string): boolean => {
@@ -6,12 +8,16 @@ export const isMongoId = (id: string): boolean => {
   return validator.isMongoId(id);
 };
 
-export const createValidator = (classValidator: any) => {
+export const createValidator = (classValidator: any): Middleware => {
   return async (ctx: Context, next: Function) => {
 
     const errors = await validate(
-      classValidator.from(ctx.request.body),
-      { validationError: { target: false } }
+      _.assign(new classValidator, ctx.request.body),
+      {
+        validationError: { target: false },
+        whitelist: true,
+        forbidNonWhitelisted: true
+      }
     );
 
     if (!!errors.length) {

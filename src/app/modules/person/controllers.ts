@@ -7,17 +7,17 @@ import {
   CreatePersonResponse,
   UpdatePersonRequest
 } from './models';
+import { Person } from '../../models/person';
 
-export const getPersons = async (ctx: Context) => {
-  ctx.body = {
-    data: await ctx.db.collection(PERSONS).find().toArray()
-  };
+export const get = async (ctx: Context) => {
+  const persons: Person[] = await ctx.db.collection(PERSONS).find().toArray();
+  ctx.body = { data: persons };
 };
 
-export const getPersonById = async (ctx: Context) => {
+export const getById = async (ctx: Context) => {
 
   const query = { _id: new ObjectId(ctx.params.id) };
-  const person = await ctx.db.collection(PERSONS).findOne(query);
+  const person: Person = await ctx.db.collection(PERSONS).findOne(query);
 
   if (!person) {
     ctx.status = 404;
@@ -29,17 +29,19 @@ export const getPersonById = async (ctx: Context) => {
   ctx.body = { data: person };
 };
 
-export const createPerson = async (ctx: Context) => {
+export const create = async (ctx: Context) => {
 
   const requestBody: CreatePersonRequest = ctx.request.body;
+  const query = { email: requestBody.email };
+  const user = await ctx.db.collection(PERSONS).find(query).toArray();
 
-  const person = await ctx.db.collection(PERSONS).insertOne(requestBody);
-
-  if (!person) {
-    ctx.status = 404;
-    ctx.body = { message: 'Sory, person with this id was not found.' };
+  if (user.length) {
+    ctx.status = 400;
+    ctx.body = { message: 'Sorry, this email already exists.' };
     return;
   }
+
+  const person = await ctx.db.collection(PERSONS).insertOne(requestBody);
 
   const responseData: CreatePersonResponse = {
     personId: person.insertedId
@@ -52,9 +54,18 @@ export const createPerson = async (ctx: Context) => {
   };
 };
 
-export const updatePerson = async (ctx: Context) => {
+export const update = async (ctx: Context) => {
 
   const requestBody: UpdatePersonRequest = ctx.request.body;
+
+  const emailQuery = { email: requestBody.email };
+  const user = await ctx.db.collection(PERSONS).find(emailQuery).toArray();
+
+  if (user.length) {
+    ctx.status = 400;
+    ctx.body = { message: 'Sorry, this email already exists.' };
+    return;
+  }
 
   const query = { _id: new ObjectId(ctx.params.id) };
   const person = await ctx.db.collection(PERSONS).updateOne(query, { $set: requestBody });
@@ -69,7 +80,7 @@ export const updatePerson = async (ctx: Context) => {
   ctx.body = { message: 'Success! Person has been updated.' };
 };
 
-export const deletePerson = async (ctx: Context) => {
+export const del = async (ctx: Context) => {
 
   const query = { _id: new ObjectId(ctx.params.id) };
   const person = await ctx.db.collection(PERSONS).deleteOne(query);
@@ -81,5 +92,5 @@ export const deletePerson = async (ctx: Context) => {
   }
 
   ctx.status = 200;
-  ctx.body = { message: 'Success! Person has been updated.' };
+  ctx.body = { message: 'Success! Person has been deleted.' };
 };

@@ -1,5 +1,10 @@
-import { trim } from '../../../utils';
-import { Length, IsEmail, IsPhoneNumber, Allow } from 'class-validator';
+import {
+  Length,
+  IsEmail,
+  IsPhoneNumber,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 
 export class CreatePersonRequest {
 
@@ -12,21 +17,12 @@ export class CreatePersonRequest {
   @IsEmail({}, { message: 'Sorry, email is invalid.' })
   email: string;
 
+  @IsOptional()
   @IsPhoneNumber('UA', { message: 'Sorry, phone is invalid.' })
-  phoneNumber: string;
+  phoneNumber?: string;
 
-  @Allow()
+  @IsBoolean({ message: 'Sorry, $property is not boolean.' })
   isMember: boolean;
-
-  static from(json: any) {
-    const model = new CreatePersonRequest();
-    model.firstName = trim(json.firstName);
-    model.lastName = trim(json.lastName);
-    model.email = trim(json.email);
-    model.phoneNumber = trim(json.phoneNumber);
-    model.isMember = trim(json.isMember);
-    return model;
-  }
 
 }
 

@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add @types/html2plaintext
+  /usr/local/bin/node /usr/local/bin/yarn add @types/koa-mongo
 
 PATH: 
-  /usr/local/var/homebrew/linked/mongodb/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/var/homebrew/linked/mongodb/bin
+  /usr/local/var/homebrew/linked/mongodb/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/var/homebrew/linked/mongodb/bin
 
 Yarn version: 
   0.24.6
@@ -18,18 +18,19 @@ npm manifest:
     "name": "koa-typescript-starter",
     "version": "1.0.3",
     "description": "A starter/seed for KOA2/TypeScript.",
-    "main": "app.js",
+    "main": "./src/index.js",
     "scripts": {
       "start": "npm run build && node ./dist/index.js",
       "build": "npm run lint && node_modules/typescript/bin/tsc",
-      "watch": "nodemon --watch 'app/**/*' -e ts --exec 'ts-node' ./app/app.ts",
+      "watch": "nodemon --watch './src/app/**/*' -e ts --exec 'ts-node' ./src/app/app.ts",
       "lint": "node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --force",
+      "mongo": "mongod --dbpath=./data",
       "fix": "node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --fix --force",
       "image:build": "docker build --tag koa-typescript-starter .",
       "image:run": "docker run --rm -ti -p 3000:3000 koa-typescript-starter",
-      "test": "NODE_ENV=test node_modules/mocha/bin/mocha -r ts-node/register ./test/**/*.spec.ts && exit 0",
-      "coverage": "NODE_ENV=test node_modules/nyc/bin/nyc.js --reporter=html --reporter=text node_modules/mocha/bin/mocha --exit -r ts-node/register ./test/**/*.spec.ts",
-      "coverage:coveralls": "NODE_ENV=test node_modules/nyc/bin/nyc.js --reporter=lcov --reporter=text-lcov node_modules/mocha/bin/mocha --exit -r ts-node/register ./test/**/*.spec.ts | coveralls"
+      "test": "NODE_ENV=test node_modules/mocha/bin/mocha -r ts-node/register ./src/test/**/*.spec.ts && exit 0",
+      "coverage": "NODE_ENV=test node_modules/nyc/bin/nyc.js --reporter=html --reporter=text node_modules/mocha/bin/mocha --exit -r ts-node/register ./src/test/**/*.spec.ts",
+      "coverage:coveralls": "NODE_ENV=test node_modules/nyc/bin/nyc.js --reporter=lcov --reporter=text-lcov node_modules/mocha/bin/mocha --exit -r ts-node/register ./src/test/**/*.spec.ts | coveralls"
     },
     "repository": {
       "type": "git",
@@ -57,6 +58,7 @@ npm manifest:
       "koa2-swagger-ui": "^2.9.5",
       "lodash": "^4.17.10",
       "mjml": "^4.3.1",
+      "module-alias": "^2.2.0",
       "nodemailer": "^5.1.1"
     },
     "devDependencies": {
@@ -86,6 +88,13 @@ npm manifest:
       "ts-node": "^6.2.0",
       "tslint": "^5.11.0",
       "typescript": "^3.3.3"
+    },
+    "_moduleAliases": {
+      "@app": "src/app",
+      "@models": "src/app/models",
+      "@modules": "src/app/modules",
+      "@services": "src/app/services",
+      "@utils": "src/app/utils"
     },
     "nyc": {
       "extension": [
@@ -1195,16 +1204,9 @@ Lockfile:
     dependencies:
       domelementtype "1"
   
-  domutils@1.5.1:
+  domutils@1.5.1, domutils@^1.5.1:
     version "1.5.1"
     resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
-    dependencies:
-      dom-serializer "0"
-      domelementtype "1"
-  
-  domutils@^1.5.1:
-    version "1.7.0"
-    resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
     dependencies:
       dom-serializer "0"
       domelementtype "1"
@@ -3014,6 +3016,10 @@ Lockfile:
       mkdirp "0.5.1"
       supports-color "5.4.0"
   
+  module-alias@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/module-alias/-/module-alias-2.2.0.tgz#a2e32275381642252bf0c51405f7a09a367479b5"
+  
   moment@^2.10.6:
     version "2.24.0"
     resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -4551,7 +4557,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fhtml2plaintext: Not found
+  Error: https://registry.yarnpkg.com/@types%2fkoa-mongo: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/0.24.6/libexec/lib/yarn-cli.js:56255:18)
       at Request.self.callback (/usr/local/Cellar/yarn/0.24.6/libexec/lib/yarn-cli.js:107854:22)
       at emitTwo (events.js:126:13)
