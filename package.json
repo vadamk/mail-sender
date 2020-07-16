@@ -40,7 +40,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.3",
     "koa2-swagger-ui": "^2.9.5",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.19",
     "mjml": "^4.3.1",
     "module-alias": "^2.2.0",
     "nodemailer": "^5.1.1"
