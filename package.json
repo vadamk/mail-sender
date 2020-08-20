@@ -28,7 +28,7 @@
   "author": "David DiMaria",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "class-validator": "^0.9.1",
     "html2plaintext": "^2.1.2",
     "jsonwebtoken": "^8.4.0",
